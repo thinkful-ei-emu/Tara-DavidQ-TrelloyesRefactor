@@ -56,9 +56,19 @@ class App extends React.Component {
       }
     }
 
+  
+omit = (obj, keyToOmit) => {
+  return Object.entries(obj).reduce(
+    (newObj, [key, value]) =>
+        key === keyToOmit ? newObj : {...newObj, [key]: value},
+    {}
+  );
+}
+
   handleDelete = (id) => {
     console.log('Deleting now!');
-    delete this.state.allCards[id];
+    let newAllCards = this.omit(this.state.allCards, id);
+ //   delete this.state.allCards[id];
     const newLists = this.state.lists.map(list => {
       let newIds = list.cardIds.filter((item) => item !== id );
       list.cardIds = newIds;
@@ -67,9 +77,10 @@ class App extends React.Component {
 
     this.setState( {
       lists: newLists,
-      allCards: this.state.allCards
+      allCards: newAllCards
   }, () => {console.log(this.state)});
 }
+
 handleAdd = (id)=>{
   let newCard = this.newRandomCard();
   let newLists = this.state.lists.map((list)=>{//add to list
@@ -77,7 +88,8 @@ handleAdd = (id)=>{
       let newList = list;
       newList.cardIds = list.cardIds.concat(newCard.id);
       return newList;
-    }else{
+    }
+    else{
       return list;
     }
   });
