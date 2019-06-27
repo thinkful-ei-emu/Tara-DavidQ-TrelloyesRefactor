@@ -1,5 +1,5 @@
 import React from 'react';
-import List from './composition/list.js';
+import List from './Components/list.js';
 
 import './App.css';
 
@@ -46,6 +46,15 @@ class App extends React.Component {
         }
       }
     }
+ newRandomCard = () => {
+  const id = Math.random().toString(36).substring(2, 4)
+  + Math.random().toString(36).substring(2, 4);
+    return {
+      id,
+      title: `Random Card ${id}`,
+      content: 'lorem ipsum',
+      }
+    }
 
   handleDelete = (id) => {
     console.log('Deleting now!');
@@ -61,12 +70,35 @@ class App extends React.Component {
       allCards: this.state.allCards
   }, () => {console.log(this.state)});
 }
+handleAdd = (id)=>{
+  let newCard = this.newRandomCard();
+  let newLists = this.state.lists.map((list)=>{//add to list
+    if(list.id ===id){
+      let newList = list;
+      newList.cardIds = list.cardIds.concat(newCard.id);
+      return newList;
+    }else{
+      return list;
+    }
+  });
+  //add to dictionary
+  let newAllCards = {...this.state.allCards};
+    newAllCards[newCard.id] = newCard;
+    this.setState({
+      lists:newLists,
+      allCards:newAllCards
+
+  });
+
+}
 
   render() {
     const arrLists = this.state.lists.map((item) =>
     <List 
-      handleDelete={this.handleDelete} 
+      handleDelete={this.handleDelete}
+      handleAdd = {this.handleAdd}
       key={item.id} 
+      id={item.id}
       cardIds={item.cardIds} 
       header={item.header} 
       allCards={this.state.allCards} />)
