@@ -18,7 +18,7 @@ function List(props) {
       <div className="List">
         <header className="List-header">
           {props.header}
-          <button onClick={()=>{props.handleAdd(props.id)}}> Add Card&plus;</button>
+          <button onClick={()=>{props.handleAdd(props.id)}}> Add Card +</button>
         </header>
           <div className="List-cards">
             {arrayOfCards}
