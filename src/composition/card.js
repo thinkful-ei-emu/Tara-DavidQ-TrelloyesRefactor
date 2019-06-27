@@ -6,7 +6,7 @@ function Card(props) {
     const { title, content, id } = props
     return (
       <div className="Card" id={id}>
-        <button type="button">delete</button>
+        <button onClick={() => {props.handleDelete(props.id)}} type="button">delete</button>
         <h3>{title}</h3>
         <p>{content}</p>
       </div>

@@ -6,7 +6,12 @@ import './list.css';
 function List(props) {
   const arrayOfCards = props.cardIds.map((letter) => {
     let cardObj = props.allCards[letter];
-    return (<Card key={cardObj.id} title={cardObj.title} content={cardObj.content} id={cardObj.id} />)
+    return (<Card 
+      handleDelete={props.handleDelete} 
+      key={cardObj.id}
+      title={cardObj.title} 
+      content={cardObj.content} 
+      id={cardObj.id} />)
   })
 
     return (
